@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone') {
+            steps {
+                git 'https://github.com/varad234/devopsvsp.git'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh '''
+                    docker run --name webserver -d -p 9090:80 -v $(pwd):/usr/share/nginx/html nginx
+                '''
+            }
+        }
+    }
+}
